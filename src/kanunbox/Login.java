@@ -257,9 +257,9 @@ btnLogin.addActionListener(new java.awt.event.ActionListener() {
                     dispose();
                     Dashboard d = new Dashboard();
                     d.run();
-                } else if(role == 2){
+                } else if(role == 3){
                     dispose();
-                    AdvocateDashboard d = new AdvocateDashboard();
+                    AdvocateDashboard d = new AdvocateDashboard(userName);
                     d.run();
                 } 
                 

@@ -254,7 +254,17 @@ public class Employee extends javax.swing.JFrame {
         
        DBHelper db = new DBHelper();
        if ( db.isConnected()) {
-           db.insertEmployee(name, address, DOB, jDate, contactNo, email, photo, post, role);
+           if(db.insertEmployee(name, address, DOB, jDate, contactNo, email, photo, post, role)){
+                 if(role == 3) {
+                if(db.createUser(email, "password", role)){
+                    JOptionPane.showMessageDialog(this, "तपाँइ को कार्य सम्पन्न भयो");
+                    dispose();
+                }
+                }
+           } else {
+               JOptionPane.showMessageDialog(this, "तपाँइ को कार्य सम्पन्न हुन सकेन, कृपया फेरी प्रयास गर्नुहोस");
+                    dispose();
+           }
        }
     }//GEN-LAST:event_btnSubmitActionPerformed
 
