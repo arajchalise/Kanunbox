@@ -383,6 +383,48 @@ public ResultSet fetchPendingCase(String advId){
 return null;
 }
 
+
+public void insertEvidences(String name, String fileName, int id){
+
+    try{
+        PreparedStatement stmt = con.prepareStatement("INSERT INTO tbl_evidences(name, filename, caseId) VALUES(?, ?, ?)");
+        stmt.setString(1, name);
+        stmt.setString(2, fileName);
+        stmt.setInt(3, id);
+        int i = stmt.executeUpdate();
+        System.out.println(i+" evid");
+    } catch(Exception e){}
+}
+
+
+public void insertHearing(Date date, String court, String adv, String verd, int id){
+
+    try{
+        PreparedStatement stmt = con.prepareStatement("INSERT INTO tbl_hearing(hearingDate, court, advocate, verdict, caseId) VALUES(?, ?, ?, ?, ?)");
+        stmt.setDate(1, date);
+        stmt.setString(2, court);
+        stmt.setString(3, adv);
+        stmt.setString(4, verd);
+        stmt.setInt(5, id);
+        int i = stmt.executeUpdate();
+        System.out.println(i+" Hearing");
+    } catch(Exception e){
+        e.printStackTrace();
+    }
+}
+
+public void insertAdditionalCaseDetail(String rno, String sts, Date rDate, int id){
+
+    try{
+        PreparedStatement stmt = con.prepareStatement("UPDATE tbl_cases SET regNo=?, status=?, regDate=? WHERE caseId=?");
+        stmt.setString(1, rno);
+        stmt.setString(2, sts);
+        stmt.setDate(3, rDate);
+        stmt.setInt(4, id);
+        int i = stmt.executeUpdate();
+        System.out.println(i+" case Detail");
+    }catch(Exception e){}
+}
 }
 
    

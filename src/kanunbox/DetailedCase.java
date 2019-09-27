@@ -59,7 +59,7 @@ public class DetailedCase extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblHearing = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -319,12 +319,12 @@ public class DetailedCase extends javax.swing.JFrame {
 
         jLabel13.setText("पेषि बिवरण ");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblHearing.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+
             },
             new String [] {
-                "पेषि मिति", "फाँट", "मा। न्यायधिस", "आदेश/ फैसला"
+                "पेषि मिति", "फाँट", "मा. न्यायधिस", "आदेश/ फैसला"
             }
         ) {
             Class[] types = new Class [] {
@@ -342,10 +342,10 @@ public class DetailedCase extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setRowHeight(25);
-        jTable1.setShowHorizontalLines(false);
-        jTable1.setShowVerticalLines(false);
-        jScrollPane3.setViewportView(jTable1);
+        tblHearing.setRowHeight(25);
+        tblHearing.setShowHorizontalLines(false);
+        tblHearing.setShowVerticalLines(false);
+        jScrollPane3.setViewportView(tblHearing);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -353,9 +353,12 @@ public class DetailedCase extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel13)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane3)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addGap(0, 834, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -397,7 +400,7 @@ public class DetailedCase extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(102, 102, 102))
+                .addContainerGap())
         );
 
         pack();
@@ -415,6 +418,7 @@ public class DetailedCase extends javax.swing.JFrame {
        if(db.isConnected()){
           ResultSet caseDetail = db.fetchCase(csId);
           ResultSet asocDetail = db.fetchAssoc(csId);
+          ResultSet hearingDetail = db.fetchHearing(csId);
           if(caseDetail.next()){
               int ClientId = caseDetail.getInt("clientId");
               ResultSet clientDetail = db.fetchClients(ClientId);
@@ -430,15 +434,20 @@ public class DetailedCase extends javax.swing.JFrame {
               String reg = "मुद्दा ";
               String reg1 = " को बिवरण";
               regNo.setText(reg‌+caseDetail.getString("regNo")+reg1);
-              
+              if(caseDetail.getDate("regDate") != null){
+                  regDate.setText(caseDetail.getDate("regDate").toString());
+              } else {
+                  regDate.setText("");
+              }
               subOfCase.setText(caseDetail.getString("subjectOfCase"));
               typeOfCase.setText(caseDetail.getString("typeOfCase"));
               statusOfCase.setText(caseDetail.getString("status"));
                 //System.out.println(ClientId+" ");
               
           }
-           DefaultTableModel model = (DefaultTableModel) tblBadi.getModel();
+            DefaultTableModel model = (DefaultTableModel) tblBadi.getModel();
             DefaultTableModel model1 = (DefaultTableModel) tblPbadi.getModel();
+            DefaultTableModel model2 = (DefaultTableModel) tblHearing.getModel();
           while(asocDetail.next()){
               if(asocDetail.getInt("inv") == 0){
                   model.addRow(new Object[] { asocDetail.getString("name"), asocDetail.getString("address")});
@@ -446,6 +455,10 @@ public class DetailedCase extends javax.swing.JFrame {
               } else {
                   model1.addRow(new Object[] { asocDetail.getString("name"), asocDetail.getString("address")});
               }
+          }
+         
+          while(hearingDetail.next()){
+              model2.addRow(new Object[] {hearingDetail.getDate("hearingDate"), hearingDetail.getString("court"), hearingDetail.getString("advocate"), hearingDetail.getString("verdict")});
           }
        }
        
@@ -481,7 +494,6 @@ public class DetailedCase extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblAssociates;
     private javax.swing.JLabel noOfHearing;
     private javax.swing.JLabel regDate;
@@ -489,6 +501,7 @@ public class DetailedCase extends javax.swing.JFrame {
     private javax.swing.JLabel statusOfCase;
     private javax.swing.JLabel subOfCase;
     private javax.swing.JTable tblBadi;
+    private javax.swing.JTable tblHearing;
     private javax.swing.JTable tblPbadi;
     private javax.swing.JLabel typeOfCase;
     // End of variables declaration//GEN-END:variables

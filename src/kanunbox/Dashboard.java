@@ -817,7 +817,7 @@ public class Dashboard extends javax.swing.JFrame {
                 {"CS1234", "N/A", "Hari Bahadur ", "Ram Bahadur Thapa ", "2076-5-27"}
             },
             new String [] {
-                "Case ID", "मुद्दा को बिषय", "ग्राहक को नाम", "अधिवक्ता", "अब को सुनुवाइ "
+                "Case ID", "मुद्दा को बिषय", "ग्राहक को नाम", "अधिवक्ता", "कैफियत"
             }
         ) {
             Class[] types = new Class [] {
@@ -1076,7 +1076,7 @@ public class Dashboard extends javax.swing.JFrame {
                     String advName = db.getAdvocateName(advId);
                     ResultSet crs = db.fetchClients(rs.getInt("clientId"));
                     if(crs.next()){
-                        model.addRow(new Object[] {rs.getInt("caseId"), rs.getString("subjectOfCase"), crs.getString("name"), advName, " "});
+                        model.addRow(new Object[] {rs.getInt("caseId"), rs.getString("subjectOfCase"), crs.getString("name"), advName, rs.getString("status")});
                     }
                 
                 }

@@ -1307,7 +1307,7 @@
                         <Column editable="true" title="&#x905;&#x927;&#x93f;&#x935;&#x915;&#x94d;&#x924;&#x93e;" type="java.lang.String">
                           <Data value="Ram Bahadur Thapa "/>
                         </Column>
-                        <Column editable="true" title="&#x905;&#x92c; &#x915;&#x94b; &#x938;&#x941;&#x928;&#x941;&#x935;&#x93e;&#x907; " type="java.lang.String">
+                        <Column editable="true" title="&#x915;&#x948;&#x92b;&#x93f;&#x92f;&#x924;" type="java.lang.String">
                           <Data value="2076-5-27"/>
                         </Column>
                       </Table>
